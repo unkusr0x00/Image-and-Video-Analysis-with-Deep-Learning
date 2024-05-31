@@ -10,6 +10,8 @@ import {VideoDialogComponent} from "../video-dialog/video-dialog.component";
 export class SearchComponent implements OnInit {
 
   query: string = '';
+  zoomedIndex: number | null = null;
+  videoID: string = '';
   videos = [    //TODO: Placeholder data
     {
       id: '1212451',
@@ -50,7 +52,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openVideoDialog(): void {
+  openVideoDialog(videoID: any): void {
     const dialogRef = this.dialog.open(VideoDialogComponent, {
       width: 'auto',
       height: 'auto',
@@ -63,5 +65,15 @@ export class SearchComponent implements OnInit {
   search() {
     // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
     console.log(this.query);
+  }
+
+  toggleZoom(videoID: any, index: number) {
+    if (this.zoomedIndex === index && this.videoID === videoID) {
+      this.zoomedIndex = null;
+      this.videoID = ''
+    } else {
+      this.zoomedIndex = index;
+      this.videoID = videoID;
+    }
   }
 }

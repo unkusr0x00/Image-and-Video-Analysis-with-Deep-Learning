@@ -14,13 +14,16 @@
   <main>
     <div *ngFor="let video of videos" class="video-row">
       <div class="video-id">
-        <mat-icon (click)="openVideoDialog()" class="play-icon">play_arrow</mat-icon>
+        <mat-icon (click)="openVideoDialog(video.id)" class="play-icon" color="primary">play_arrow</mat-icon>
         <span>{{ video.id }}</span>
       </div>
       <div class="thumbnails">
-        <div *ngFor="let thumbnail of video.thumbnails" class="thumbnail">
-          <img [src]="thumbnail.src" [alt]="thumbnail.time">
-          <span>{{ thumbnail.time }}</span>
+        <div *ngFor="let thumbnail of video.thumbnails; let i = index" class="thumbnail">
+          <div class="image-container">
+            <img [src]="thumbnail.src" [alt]="thumbnail.time" (click)="toggleZoom(video.id, i)"
+                 [class.zoomed]="zoomedIndex === i && videoID === video.id">
+          </div>
+            <span>{{ thumbnail.time }}</span>
         </div>
       </div>
     </div>
