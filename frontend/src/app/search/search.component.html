@@ -1,1 +1,34 @@
-<p>search works!</p>
+<div class="container">
+  <header>
+    <h1>Neben & Wedam</h1>
+    <div class="search-bar">
+      <mat-form-field appearance="fill" class="searchbar">
+        <mat-label>Text query to search for desired video content</mat-label>
+        <input matInput [(ngModel)]="query" (keydown.enter)="search()">
+      </mat-form-field>
+      <button mat-icon-button (click)="search()" class="search-button">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </header>
+  <main>
+    <div *ngFor="let video of videos" class="video-row">
+      <div class="video-id">
+        <mat-icon>play_arrow</mat-icon>
+        <span>{{ video.id }}</span>
+      </div>
+      <div class="thumbnails">
+        <div *ngFor="let thumbnail of video.thumbnails" class="thumbnail">
+          <img [src]="thumbnail.src" [alt]="thumbnail.time">
+          <span>{{ thumbnail.time }}</span>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-icon">
+      <mat-icon>info</mat-icon>
+    </div>
+  </footer>
+</div>
+
