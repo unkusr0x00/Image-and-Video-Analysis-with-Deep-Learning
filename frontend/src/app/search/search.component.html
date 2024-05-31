@@ -14,7 +14,7 @@
   <main>
     <div *ngFor="let video of videos" class="video-row">
       <div class="video-id">
-        <mat-icon>play_arrow</mat-icon>
+        <mat-icon (click)="openVideoDialog()" class="play-icon">play_arrow</mat-icon>
         <span>{{ video.id }}</span>
       </div>
       <div class="thumbnails">

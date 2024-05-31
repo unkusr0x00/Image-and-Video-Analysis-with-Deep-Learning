@@ -60,7 +60,9 @@ main {
 .video-row {
   display: flex;
   align-items: center;
+  padding-bottom: 5px;
   margin-bottom: 20px;
+  border-bottom: 2px solid black;
 }
 
 .video-id {
@@ -73,6 +75,10 @@ main {
   width: 24px;
   height: 24px;
   margin-right: 10px;
+}
+
+.play-icon {
+  cursor: pointer;
 }
 
 .thumbnails {

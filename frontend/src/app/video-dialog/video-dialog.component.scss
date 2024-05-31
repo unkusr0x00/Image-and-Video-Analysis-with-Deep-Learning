@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  overflow: visible;
+}
+
+.mat-dialog-container {
+  overflow: visible;
+  padding: 0;
+}
+
+video {
+  width: 100%;
+  height: auto;
+}
+
+.dialog-actions {
+  justify-content: space-between;
+}

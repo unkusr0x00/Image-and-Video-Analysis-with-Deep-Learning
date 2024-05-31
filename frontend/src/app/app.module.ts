@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import { VideoDialogComponent } from './video-dialog/video-dialog.component';
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent },
@@ -18,7 +20,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent
+    SearchComponent,
+    VideoDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -28,9 +31,11 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [VideoDialogComponent]
 })
 export class AppModule { }
