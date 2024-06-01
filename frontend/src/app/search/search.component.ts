@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {VideoDialogComponent} from "../video-dialog/video-dialog.component";
+import {FrameDialogComponent} from "../frame-dialog/frame-dialog.component";
 
 @Component({
   selector: 'app-search',
@@ -19,7 +20,7 @@ export class SearchComponent implements OnInit {
         { src: 'assets/Placeholder.png', time: '12:32:12' },
         { src: 'assets/Placeholder.png', time: '12:32:15' },
         { src: 'assets/Placeholder.png', time: '12:32:18' },
-        { src: 'assets/Placeholder.png', time: '12:32:21' },
+        { src: 'assets/placeholder2.jpg', time: '12:32:21' },
         { src: 'assets/Placeholder.png', time: '12:32:24' },
         { src: 'assets/Placeholder.png', time: '12:32:12' },
         { src: 'assets/Placeholder.png', time: '12:32:15' },
@@ -67,13 +68,16 @@ export class SearchComponent implements OnInit {
     console.log(this.query);
   }
 
-  toggleZoom(videoID: any, index: number) {
-    if (this.zoomedIndex === index && this.videoID === videoID) {
-      this.zoomedIndex = null;
-      this.videoID = ''
-    } else {
-      this.zoomedIndex = index;
-      this.videoID = videoID;
+  openFrameDialog(videoID: string, index: number) {
+    let video = this.videos.find(video => video.id === videoID);
+    let frameData = video?.thumbnails[index];
+    const dialogRef = this.dialog.open(FrameDialogComponent, {
+      data: { videoID, frameData, index },
+      width: 'auto',
+      height: 'auto',
+      maxWidth: '80vw', // Maximale Breite des Dialogs
+      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      panelClass: 'frame-container'
+    });
     }
-  }
 }

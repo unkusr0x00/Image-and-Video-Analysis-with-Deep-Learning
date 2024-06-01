@@ -11,6 +11,7 @@ import { MatIconModule } from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import { VideoDialogComponent } from './video-dialog/video-dialog.component';
+import { FrameDialogComponent } from './frame-dialog/frame-dialog.component';
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     SearchComponent,
-    VideoDialogComponent
+    VideoDialogComponent,
+    FrameDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,6 @@ const routes: Routes = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [VideoDialogComponent]
+  entryComponents: [VideoDialogComponent, FrameDialogComponent]
 })
 export class AppModule { }

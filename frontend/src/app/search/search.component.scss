@@ -107,12 +107,6 @@ img {
   position: relative;
 }
 
-img.zoomed {
-  transform: scale(3);
-  z-index: 1000;
-  position: fixed;
-}
-
 span {
   font-size: 12px;
 }
