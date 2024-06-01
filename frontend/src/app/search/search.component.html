@@ -13,9 +13,14 @@
   </header>
   <main>
     <div *ngFor="let video of videos" class="video-row">
-      <div class="video-id">
-        <mat-icon (click)="openVideoDialog(video.id)" class="play-icon" color="primary">play_arrow</mat-icon>
-        <span>{{ video.id }}</span>
+      <div class="video-actions">
+        <div class="video-id">
+          <mat-icon (click)="openVideoDialog(video.id)" class="play-icon" color="primary">play_arrow</mat-icon>
+          <span>{{ video.id }}</span>
+        </div>
+          <div class="auto-submit">
+            <mat-icon (click)="openSubmitDialogAuto()" class="auto-submit-button">upload</mat-icon>
+          </div>
       </div>
       <div class="thumbnails">
         <div *ngFor="let thumbnail of video.thumbnails; let i = index" class="thumbnail">
@@ -28,7 +33,7 @@
     </div>
   </main>
   <footer>
-    <button mat-fab class="footer-icon">
+    <button mat-fab class="footer-icon" (click)="openSubmitDialogManual()">
       <b>!</b>
     </button>
   </footer>

@@ -40,6 +40,6 @@ const routes: Routes = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [VideoDialogComponent, FrameDialogComponent]
+  entryComponents: [VideoDialogComponent, FrameDialogComponent, SubmitDialogComponent]
 })
 export class AppModule { }

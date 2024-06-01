@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {VideoDialogComponent} from "../video-dialog/video-dialog.component";
 import {FrameDialogComponent} from "../frame-dialog/frame-dialog.component";
+import {SubmitDialogComponent} from "../submit-dialog/submit-dialog.component";
 
 @Component({
   selector: 'app-search',
@@ -79,5 +80,25 @@ export class SearchComponent implements OnInit {
       maxHeight: '80vh', // Maximale Höhe des Dialogs
       panelClass: 'frame-container'
     });
-    }
+    };
+
+  openSubmitDialogManual() {
+    const dialogRef = this.dialog.open(SubmitDialogComponent, {
+      width: 'auto',
+      height: 'auto',
+      maxWidth: '80vw', // Maximale Breite des Dialogs
+      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      panelClass: 'custom-dialog-container'
+    });
+  }
+
+  openSubmitDialogAuto() {
+    const dialogRef = this.dialog.open(SubmitDialogComponent, {
+      width: 'auto',
+      height: 'auto',
+      maxWidth: '80vw', // Maximale Breite des Dialogs
+      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      panelClass: 'custom-dialog-container'
+    });
+  }
 }

@@ -1,1 +1,24 @@
-<p>submit-dialog works!</p>
+<h1 mat-dialog-title><b>Submit to DRES</b></h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>VideoID</mat-label>
+    <input matInput >
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Collection</mat-label>
+    <input matInput value="V3C100" >
+  </mat-form-field>
+  <div class="time-inputs">
+    <mat-form-field appearance="fill" class="half-width">
+      <mat-label>Starttime (Milliseconds)</mat-label>
+      <input matInput value="00:00:00" >
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="half-width">
+      <mat-label>Endtime (Milliseconds)</mat-label>
+      <input matInput value="00:00:00" >
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Submit</button>
+</div>
