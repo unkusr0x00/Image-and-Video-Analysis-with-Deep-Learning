@@ -20,17 +20,17 @@
       <div class="thumbnails">
         <div *ngFor="let thumbnail of video.thumbnails; let i = index" class="thumbnail">
           <div class="image-container">
-            <img [src]="thumbnail.src" [alt]="thumbnail.time" (click)="openFrameDialog(video.id, i)">
+            <img [src]="thumbnail.src" [alt]="thumbnail.time" (click)="openFrameDialog(video.id, i)" class="frames">
           </div>
-            <span>{{ thumbnail.time }}</span>
+          <span>{{ thumbnail.time }}</span>
         </div>
       </div>
     </div>
   </main>
   <footer>
-    <div class="footer-icon">
-      <mat-icon>info</mat-icon>
-    </div>
+    <button mat-fab class="footer-icon">
+      <b>!</b>
+    </button>
   </footer>
 </div>
 

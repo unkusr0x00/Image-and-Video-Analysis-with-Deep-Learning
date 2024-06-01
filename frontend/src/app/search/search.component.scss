@@ -112,7 +112,6 @@ span {
 }
 
 footer {
-  background-color: #e6f7d4;
   padding: 10px;
   text-align: right;
 }
@@ -124,4 +123,22 @@ footer {
 .footer-icon img {
   width: 24px;
   height: 24px;
+}
+
+.frames {
+  cursor: pointer;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+}
+
+.footer-icon {
+  margin-right: 30px;
+  font-size: 45px;
+  background-color: #76C84F;
 }

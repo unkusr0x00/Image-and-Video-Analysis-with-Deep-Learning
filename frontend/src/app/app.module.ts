@@ -12,6 +12,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import { VideoDialogComponent } from './video-dialog/video-dialog.component';
 import { FrameDialogComponent } from './frame-dialog/frame-dialog.component';
+import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
     AppComponent,
     SearchComponent,
     VideoDialogComponent,
-    FrameDialogComponent
+    FrameDialogComponent,
+    SubmitDialogComponent
   ],
   imports: [
     BrowserModule,
