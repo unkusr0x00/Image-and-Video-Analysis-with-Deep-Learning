@@ -8,11 +8,12 @@ import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialogModule } from "@angular/material/dialog";
 import { VideoDialogComponent } from './video-dialog/video-dialog.component';
 import { FrameDialogComponent } from './frame-dialog/frame-dialog.component';
 import { SubmitDialogComponent } from './submit-dialog/submit-dialog.component';
+import { HttpClientModule } from "@angular/common/http";
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent },
@@ -36,7 +37,8 @@ const routes: Routes = [
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

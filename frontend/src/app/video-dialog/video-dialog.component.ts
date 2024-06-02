@@ -35,9 +35,6 @@ export class VideoDialogComponent {
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    console.log(this.frameDuration)
-    console.log(this.framerate)
-    console.log(event);
     if (event.key === 'ArrowRight') {
       this.videoPlayer.nativeElement.currentTime += 1 / this.framerate;
     } else if (event.key === 'ArrowLeft') {

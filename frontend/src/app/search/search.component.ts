@@ -19,34 +19,34 @@ export class SearchComponent implements OnInit {
       id: '1212451',
       framerate: 25,
       thumbnails: [
-        { src: 'assets/Placeholder.png', time: '12:32:12' },
-        { src: 'assets/Placeholder.png', time: '12:32:15' },
-        { src: 'assets/Placeholder.png', time: '12:32:18' },
-        { src: 'assets/placeholder2.jpg', time: '12:32:21' },
-        { src: 'assets/Placeholder.png', time: '12:32:24' },
-        { src: 'assets/Placeholder.png', time: '12:32:12' },
-        { src: 'assets/Placeholder.png', time: '12:32:15' },
-        { src: 'assets/Placeholder.png', time: '12:32:18' },
-        { src: 'assets/Placeholder.png', time: '12:32:21' },
-        { src: 'assets/Placeholder.png', time: '12:32:24' },
-        { src: 'assets/Placeholder.png', time: '12:32:12' },
-        { src: 'assets/Placeholder.png', time: '12:32:15' },
-        { src: 'assets/Placeholder.png', time: '12:32:18' },
-        { src: 'assets/Placeholder.png', time: '12:32:21' },
-        { src: 'assets/Placeholder.png', time: '12:32:24' },
-        { src: 'assets/Placeholder.png', time: '12:32:12' },
-        { src: 'assets/Placeholder.png', time: '12:32:15' },
-        { src: 'assets/Placeholder.png', time: '12:32:18' },
-        { src: 'assets/Placeholder.png', time: '12:32:21' },
-        { src: 'assets/Placeholder.png', time: '12:32:24' }
+        { src: 'assets/Placeholder.png', time: '6000' },
+        { src: 'assets/Placeholder.png', time: '6020' },
+        { src: 'assets/Placeholder.png', time: '6040' },
+        { src: 'assets/placeholder2.jpg', time: '6060' },
+        { src: 'assets/Placeholder.png', time: '6080' },
+        { src: 'assets/Placeholder.png', time: '6100' },
+        { src: 'assets/Placeholder.png', time: '6120' },
+        { src: 'assets/Placeholder.png', time: '6140' },
+        { src: 'assets/Placeholder.png', time: '6160' },
+        { src: 'assets/Placeholder.png', time: '6180' },
+        { src: 'assets/Placeholder.png', time: '6200' },
+        { src: 'assets/Placeholder.png', time: '6220' },
+        { src: 'assets/Placeholder.png', time: '6240' },
+        { src: 'assets/Placeholder.png', time: '6260' },
+        { src: 'assets/Placeholder.png', time: '6280' },
+        { src: 'assets/Placeholder.png', time: '6300' },
+        { src: 'assets/Placeholder.png', time: '6320' },
+        { src: 'assets/Placeholder.png', time: '6340' },
+        { src: 'assets/Placeholder.png', time: '6360' },
+        { src: 'assets/Placeholder.png', time: '6380' }
       ]
     },
     {
       id: '1235413',
       framerate: 30,
       thumbnails: [
-        { src: 'assets/Placeholder.png', time: '00:03:14' },
-        { src: 'assets/Placeholder.png', time: '00:03:21' }
+        { src: 'assets/Placeholder.png', time: '2128' },
+        { src: 'assets/Placeholder.png', time: '2163' }
       ]
     }
   ];
@@ -97,8 +97,12 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  openSubmitDialogAuto() {
+  openSubmitDialogAuto(videoID: string) {
+    let video = this.videos.find(video => video.id === videoID);
+    let firstTimeStamp = video?.thumbnails[0].time;
+    let lastTimeStamp = video?.thumbnails[video.thumbnails.length - 1].time;
     const dialogRef = this.dialog.open(SubmitDialogComponent, {
+      data: { videoID, firstTimeStamp, lastTimeStamp },
       width: 'auto',
       height: 'auto',
       maxWidth: '80vw', // Maximale Breite des Dialogs
