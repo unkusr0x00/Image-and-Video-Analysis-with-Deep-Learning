@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Video Player</h1>
+<div mat-dialog-content>
+  <video #videoPlayer controls (timeupdate)="updateTime()" (keydown)="onKeyDown($event)" class="video-player">
+    <source src="assets/sample.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <p>
+    <input type="number" [(ngModel)]="currentTimeInput" (change)="onTimeChange()" /> / {{ duration }}
+  </p>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onClose()">Close</button>
+  <button mat-button (click)="onSubmit()" style="background-color: #76C84F; color: white;">Submit</button>
+</div>

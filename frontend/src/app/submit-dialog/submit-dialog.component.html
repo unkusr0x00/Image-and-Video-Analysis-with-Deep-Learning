@@ -1,0 +1,33 @@
+<h1 mat-dialog-title><b>Submit to DRES</b></h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>EvaluationID</mat-label>
+    <input matInput [(ngModel)]="evaluationId" >
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>EvaluationID</mat-label>
+    <input matInput [(ngModel)]="taskName" >
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>VideoID</mat-label>
+    <input matInput [(ngModel)]="data.videoID">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Collection</mat-label>
+    <input matInput [(ngModel)]="collection" >
+  </mat-form-field>
+  <div class="time-inputs">
+    <mat-form-field appearance="fill" class="half-width">
+      <mat-label>Starttime (Milliseconds)</mat-label>
+      <input matInput [(ngModel)]="data.firstTimeStamp" >
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="half-width">
+      <mat-label>Endtime (Milliseconds)</mat-label>
+      <input matInput [(ngModel)]="data.lastTimeStamp" >
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onLogin()">Login</button>
+  <button mat-button mat-dialog-close (click)="onSubmit()">Submit</button>
+</div>

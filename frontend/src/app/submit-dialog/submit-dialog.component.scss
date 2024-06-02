@@ -1,0 +1,32 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.time-inputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.half-width {
+  width: 48%;
+}
+
+[mat-dialog-title] {
+  background-color: #e8f5e9;
+  padding: 16px;
+  margin: -24px -24px 16px -24px;
+}
+
+[mat-dialog-title] h1 {
+  margin: 0;
+}
+
+[mat-dialog-actions] {
+  padding: 16px;
+}
+
+button[mat-dialog-close] {
+  background-color: #76C84FFF;
+  color: white;
+}

@@ -1,0 +1,8 @@
+<div class="dialog-container">
+  <h1 class="title">{{ data.videoID }}</h1>
+  <button mat-button (click)="closeDialog()" class="close-frame-button"><b>X</b></button>
+  <img [src]="data.frameData.src" [alt]="data.frameData.time" class="frame">
+</div>
+<div class="time-container">
+  <p class="time">{{ data.frameData.time }}</p>
+</div>
