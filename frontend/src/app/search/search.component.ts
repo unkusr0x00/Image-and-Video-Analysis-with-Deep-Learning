@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
   videos = [    //TODO: Placeholder data
     {
       id: '1212451',
+      framerate: 25,
       thumbnails: [
         { src: 'assets/Placeholder.png', time: '12:32:12' },
         { src: 'assets/Placeholder.png', time: '12:32:15' },
@@ -42,6 +43,7 @@ export class SearchComponent implements OnInit {
     },
     {
       id: '1235413',
+      framerate: 30,
       thumbnails: [
         { src: 'assets/Placeholder.png', time: '00:03:14' },
         { src: 'assets/Placeholder.png', time: '00:03:21' }
@@ -55,7 +57,10 @@ export class SearchComponent implements OnInit {
   }
 
   openVideoDialog(videoID: any): void {
+    let video = this.videos.find(video => video.id === videoID);
+    let framerate = video?.framerate;
     const dialogRef = this.dialog.open(VideoDialogComponent, {
+      data: { framerate },
       width: 'auto',
       height: 'auto',
       maxWidth: '80vw', // Maximale Breite des Dialogs

@@ -16,3 +16,12 @@ video {
 .dialog-actions {
   justify-content: space-between;
 }
+
+p {
+  text-align: center;
+}
+
+.video-player {
+  max-height: 60vh;
+  max-width: 60vw;
+}
