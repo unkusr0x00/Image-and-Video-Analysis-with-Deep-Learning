@@ -3,6 +3,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {VideoDialogComponent} from "../video-dialog/video-dialog.component";
 import {FrameDialogComponent} from "../frame-dialog/frame-dialog.component";
 import {SubmitDialogComponent} from "../submit-dialog/submit-dialog.component";
+import {ServerService} from "../services/server/server.service";
 
 @Component({
   selector: 'app-search',
@@ -51,7 +52,7 @@ export class SearchComponent implements OnInit {
     }
   ];
 
-  constructor(public  dialog: MatDialog) { }
+  constructor(public  dialog: MatDialog, private serverService: ServerService) { }
 
   ngOnInit(): void {
   }
@@ -71,7 +72,11 @@ export class SearchComponent implements OnInit {
 
   search() {
     // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
-    console.log(this.query);
+    this.serverService.search(this.query).subscribe( response => {
+      console.log('Suchanfrage erfolgreich', response);
+    }, err => {
+      console.error('Fehler bei der Suchanfrage', err);
+    });
   }
 
   openFrameDialog(videoID: string, index: number) {
