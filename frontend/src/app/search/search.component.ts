@@ -15,6 +15,7 @@ export class SearchComponent implements OnInit {
   query: string = '';
   zoomedIndex: number | null = null;
   videoID: string = '';
+  videoData: any = null;
   videos = [    //TODO: Placeholder data
     {
       id: '1212451',
@@ -72,8 +73,9 @@ export class SearchComponent implements OnInit {
 
   search() {
     // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
-    this.serverService.search(this.query).subscribe( response => {
+    this.serverService.searchID(this.query).subscribe( response => {
       console.log('Suchanfrage erfolgreich', response);
+      this.videoData = response;
     }, err => {
       console.error('Fehler bei der Suchanfrage', err);
     });

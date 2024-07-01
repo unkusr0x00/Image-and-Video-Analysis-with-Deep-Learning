@@ -20,4 +20,13 @@ export class ServerService {
 
     return this.http.post<any>(url, searchData, { headers });
   }
+
+  searchID(VideoID: string): Observable<any> {
+    const url = `${this.Url}/searchID`;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const searchData = { VideoID };
+    console.log(searchData);
+
+    return this.http.post<any>(url, searchData, { headers });
+  }
 }

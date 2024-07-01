@@ -11,23 +11,23 @@
       </button>
     </div>
   </header>
-  <main>
-    <div *ngFor="let video of videos" class="video-row">
+  <main *ngIf="videoData">
+    <div class="video-row"> <!-- *ngFor="let video of videos" -->
       <div class="video-actions">
         <div class="video-id">
-          <mat-icon (click)="openVideoDialog(video.id)" class="play-icon" color="primary">play_arrow</mat-icon>
-          <span>{{ video.id }}</span>
+          <mat-icon (click)="openVideoDialog(videoData.VideoID)" class="play-icon" color="primary">play_arrow</mat-icon>
+          <span>{{ videoData.VideoID }}</span>
         </div>
           <div class="auto-submit">
-            <mat-icon (click)="openSubmitDialogAuto(video.id)" class="auto-submit-button">upload</mat-icon>
+            <mat-icon (click)="openSubmitDialogAuto(videoData.VideoID)" class="auto-submit-button">upload</mat-icon>
           </div>
       </div>
       <div class="thumbnails">
-        <div *ngFor="let thumbnail of video.thumbnails; let i = index" class="thumbnail">
+        <div *ngFor="let frame of videoData.Frames; let i = index" class="thumbnail">
           <div class="image-container">
-            <img [src]="thumbnail.src" [alt]="thumbnail.time" (click)="openFrameDialog(video.id, i)" class="frames">
+            <img [src]="'data:image/jpeg;base64,' + frame.KeyframeImage" [alt]="frame.Starttime" (click)="openFrameDialog(videoData.VideoID, i)" class="frames">
           </div>
-          <span>{{ thumbnail.time }}</span>
+          <span>{{ frame.Starttime }}</span>
         </div>
       </div>
     </div>
