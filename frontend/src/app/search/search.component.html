@@ -1,31 +1,39 @@
+<link rel="stylesheet" href="../frame-dialog/frame-dialog.component.scss">
 <div class="container">
   <header>
     <h1>Neben & Wedam</h1>
+    <mat-form-field>
+      <mat-label>Choose Search method</mat-label>
+      <mat-select [(value)]="searchMethod">
+        <mat-option value="CLIP">Search with CLIP</mat-option>
+        <mat-option value="CNN">Search with CNN Results</mat-option>
+      </mat-select>
+    </mat-form-field>
     <div class="search-bar">
       <mat-form-field appearance="fill" class="searchbar">
         <mat-label>Text query to search for desired video content</mat-label>
-        <input matInput [(ngModel)]="query" (keydown.enter)="search()">
+        <input matInput [(ngModel)]="query" (keydown.enter)="doSearch()">
       </mat-form-field>
-      <button mat-icon-button (click)="search()" class="search-button">
+      <button mat-icon-button (click)="doSearch()" class="search-button">
         <mat-icon>search</mat-icon>
       </button>
     </div>
   </header>
   <main *ngIf="videoData">
-    <div class="video-row"> <!-- *ngFor="let video of videos" -->
+    <div *ngFor="let video of this.videoData" class="video-row">
       <div class="video-actions">
         <div class="video-id">
-          <mat-icon (click)="openVideoDialog(videoData.VideoID)" class="play-icon" color="primary">play_arrow</mat-icon>
-          <span>{{ videoData.VideoID }}</span>
+          <mat-icon (click)="openVideoDialog(video)" class="play-icon" color="primary">play_arrow</mat-icon>
+          <span>{{ video.VideoID }}</span>
         </div>
           <div class="auto-submit">
-            <mat-icon (click)="openSubmitDialogAuto(videoData.VideoID)" class="auto-submit-button">upload</mat-icon>
+            <mat-icon (click)="openSubmitDialogAuto(video.VideoID)" class="auto-submit-button">upload</mat-icon>
           </div>
       </div>
       <div class="thumbnails">
-        <div *ngFor="let frame of videoData.Frames; let i = index" class="thumbnail">
+        <div *ngFor="let frame of video.Frames; let i = index" class="thumbnail" [ngStyle]="{ 'background-color': frame.isMatch ? 'red' : 'transparent' }">
           <div class="image-container">
-            <img [src]="'data:image/jpeg;base64,' + frame.KeyframeImage" [alt]="frame.Starttime" (click)="openFrameDialog(videoData.VideoID, i)" class="frames">
+            <img [src]="'data:image/jpeg;base64,' + frame.KeyframeImage" [alt]="frame.Starttime" (contextmenu)="openFrameDialog($event, video, frame)" class="frames">
           </div>
           <span>{{ frame.Starttime }}</span>
         </div>

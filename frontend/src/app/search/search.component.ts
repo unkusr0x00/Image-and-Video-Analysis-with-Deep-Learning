@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit {
   zoomedIndex: number | null = null;
   videoID: string = '';
   videoData: any = null;
+  searchMethod = 'CLIP';
   videos = [    //TODO: Placeholder data
     {
       id: '1212451',
@@ -58,11 +59,11 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openVideoDialog(videoID: any): void {
-    let video = this.videos.find(video => video.id === videoID);
-    let framerate = video?.framerate;
+  openVideoDialog(video: any): void {
+    let framerate = video.OriginalFramerate;
+    let videoID = video.VideoID;
     const dialogRef = this.dialog.open(VideoDialogComponent, {
-      data: { framerate },
+      data: { videoID, framerate },
       width: 'auto',
       height: 'auto',
       maxWidth: '80vw', // Maximale Breite des Dialogs
@@ -71,21 +72,49 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  search() {
+  doSearch() {
+    if(this.searchMethod === 'CLIP') {
+      this.clipSearch();
+    } else {
+      this.searchID();
+    }
+  }
+
+  searchID() {
     // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
     this.serverService.searchID(this.query).subscribe( response => {
-      console.log('Suchanfrage erfolgreich', response);
       this.videoData = response;
+      console.log('Suchanfrage erfolgreich', this.videoData);
     }, err => {
       console.error('Fehler bei der Suchanfrage', err);
     });
   }
 
-  openFrameDialog(videoID: string, index: number) {
-    let video = this.videos.find(video => video.id === videoID);
-    let frameData = video?.thumbnails[index];
+  clipSearch() {
+    // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
+    this.serverService.clipSearch(this.query).subscribe(response => {
+      console.log('Suchanfrage erfolgreich', response);
+      this.videoData = response;
+      // Check if any frame of the video array has isMatch set to true and log the frames
+      for(let video of this.videoData) {
+        for(let frame of video.Frames) {
+          if(frame.isMatch === true) {
+            console.log(frame);
+          }
+        }
+      }
+      console.log('nothing found');
+    }, err => {
+      console.error('Fehler bei der Suchanfrage', err);
+    });
+  }
+
+  openFrameDialog(event: any, video: any, frame: any,) {
+    event.stopPropagation();
+    event.preventDefault();
+    const videoID = video.VideoID;
     const dialogRef = this.dialog.open(FrameDialogComponent, {
-      data: { videoID, frameData, index },
+      data: { videoID, frame },
       width: 'auto',
       height: 'auto',
       maxWidth: '80vw', // Maximale Breite des Dialogs

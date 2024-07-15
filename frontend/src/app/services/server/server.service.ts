@@ -12,8 +12,8 @@ export class ServerService {
 
   constructor(private http: HttpClient) { }
 
-  search(query: string): Observable<any> {
-    const url = `${this.Url}/search`;
+  clipSearch(query: string): Observable<any> {
+    const url = `${this.Url}/clip-search`;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const searchData = { query };
     console.log(searchData);
@@ -28,5 +28,14 @@ export class ServerService {
     console.log(searchData);
 
     return this.http.post<any>(url, searchData, { headers });
+  }
+
+  getVideo(videoID: string): Observable<Blob> {
+    const url = `${this.Url}/get-video`;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const searchData = { videoID };
+    console.log(videoID);
+
+    return this.http.post(url, searchData, { headers, responseType: 'blob' });
   }
 }
