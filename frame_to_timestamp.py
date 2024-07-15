@@ -118,7 +118,7 @@ def rename_files_to_scene_format(folder_path):
         files_sorted = sorted(valid_files, key=lambda x: time_to_seconds(x.split('_start_')[1].replace('_', ':').replace('.jpg', '')))
         for idx, file in enumerate(files_sorted):
             base_name = file[:5]
-            new_file = f"{base_name}_Scene-{idx+1}.jpg"
+            new_file = f"{base_name}_Scene-{idx+1}_.jpg"
             os.rename(os.path.join(root, file), os.path.join(root, new_file))
 
 if __name__ == "__main__":
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     parser.add_argument('-s', '--shots', action='store_true', help="Process shot boundaries.")
     parser.add_argument('-k', '--keyframes', action='store_true', help="Process keyframes.")
     parser.add_argument('-f', '--folder', default=None, help="Folder containing 'keyframes' and 'shot_boundaries' directories.")
-    parser.add_argument('-r', '--rename', action='store_true', help="Rename files to scene format. (execute after initial conversion)")
+    parser.add_argument('-r', '--rename', action='store_true', help="Rename files to scene format. (execute after initial conversion in _converted folder)")
 
     args = parser.parse_args()
     option = 'both'
