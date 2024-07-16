@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Video Player</h1>
 <div mat-dialog-content>
   <div *ngIf="videoUrl">
-  <video #videoPlayer controls [src]="videoUrl" (timeupdate)="updateTime()" (keydown)="onKeyDown($event)" class="video-player">
+  <video #videoPlayer controls [src]="videoUrl" (timeupdate)="updateTime()" (keydown)="onKeyDown($event)" (play)="onPlay($event)" class="video-player">
     Your browser does not support the video tag.
   </video>
   </div>

@@ -54,7 +54,7 @@ export class SearchComponent implements OnInit {
     }
   ];
 
-  constructor(public  dialog: MatDialog, private serverService: ServerService) { }
+  constructor(public dialog: MatDialog, private serverService: ServerService) { }
 
   ngOnInit(): void {
   }
@@ -62,8 +62,9 @@ export class SearchComponent implements OnInit {
   openVideoDialog(video: any): void {
     let framerate = video.OriginalFramerate;
     let videoID = video.VideoID;
+    let fromframe = false;
     const dialogRef = this.dialog.open(VideoDialogComponent, {
-      data: { videoID, framerate },
+      data: { videoID, framerate, fromframe },
       width: 'auto',
       height: 'auto',
       maxWidth: '80vw', // Maximale Breite des Dialogs
@@ -109,12 +110,17 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  markAsSolutionItem(frame: any) {
+    frame.isMatch = !frame.isMatch;
+  }
+
   openFrameDialog(event: any, video: any, frame: any,) {
     event.stopPropagation();
     event.preventDefault();
     const videoID = video.VideoID;
+    const framerate = video.OriginalFramerate;
     const dialogRef = this.dialog.open(FrameDialogComponent, {
-      data: { videoID, frame },
+      data: { videoID, frame, framerate },
       width: 'auto',
       height: 'auto',
       maxWidth: '80vw', // Maximale Breite des Dialogs
@@ -133,10 +139,14 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  openSubmitDialogAuto(videoID: string) {
-    let video = this.videos.find(video => video.id === videoID);
-    let firstTimeStamp = video?.thumbnails[0].time;
-    let lastTimeStamp = video?.thumbnails[video.thumbnails.length - 1].time;
+  openSubmitDialogAuto(video: any) {
+    let videoID = video.VideoID;
+    const matchedFrames = video.Frames.filter((frame: { isMatch: any; }) => frame.isMatch);
+    let firstTimeStamp = timeStringToMilliseconds(matchedFrames[0].Starttime);
+    let lastTimeStamp = timeStringToMilliseconds(matchedFrames[matchedFrames.length - 1].Endtime);
+    console.log(`First matched frame start time: ${firstTimeStamp}`);
+    console.log(`Last matched frame end time: ${lastTimeStamp}`);
+
     const dialogRef = this.dialog.open(SubmitDialogComponent, {
       data: { videoID, firstTimeStamp, lastTimeStamp },
       width: 'auto',
@@ -146,4 +156,22 @@ export class SearchComponent implements OnInit {
       panelClass: 'custom-dialog-container'
     });
   }
+}
+
+
+// Utility function to convert time string to milliseconds
+function timeStringToMilliseconds(timeString: string): number {
+  const parts = timeString.split(':');
+
+  if (parts.length !== 3) {
+    throw new Error('Invalid time format');
+  }
+
+  const hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+  const secondsParts = parts[2].split('.');
+  const seconds = parseInt(secondsParts[0], 10);
+  const milliseconds = secondsParts.length > 1 ? parseInt(secondsParts[1], 10) : 0;
+
+  return ((hours * 60 * 60) + (minutes * 60) + seconds) * 1000 + milliseconds;
 }

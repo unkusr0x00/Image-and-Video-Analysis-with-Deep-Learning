@@ -3,6 +3,11 @@
   <button mat-button (click)="closeDialog()" class="close-frame-button"><b>X</b></button>
   <img [src]="'data:image/jpeg;base64,' + data.frame.KeyframeImage" [alt]="data.frame.Starttime" class="frame">
 </div>
+<div class="play-icon-container">
+  <mat-icon (click)="openVideoDialog(data.frame)" class="play-icon" color="primary">play_arrow</mat-icon>
+</div>
 <div class="time-container">
   <p class="time">{{ data.frame.Starttime }}</p>
+  <p class="time">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</p>
+  <p class="time">{{ data.frame.Endtime }}</p>
 </div>

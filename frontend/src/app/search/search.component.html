@@ -27,11 +27,11 @@
           <span>{{ video.VideoID }}</span>
         </div>
           <div class="auto-submit">
-            <mat-icon (click)="openSubmitDialogAuto(video.VideoID)" class="auto-submit-button">upload</mat-icon>
+            <mat-icon (click)="openSubmitDialogAuto(video)" class="auto-submit-button">upload</mat-icon>
           </div>
       </div>
       <div class="thumbnails">
-        <div *ngFor="let frame of video.Frames; let i = index" class="thumbnail" [ngStyle]="{ 'background-color': frame.isMatch ? 'red' : 'transparent' }">
+        <div *ngFor="let frame of video.Frames; let i = index" class="thumbnail" [ngStyle]="{ 'background-color': frame.isMatch ? 'red' : 'transparent' }" (click)="markAsSolutionItem(frame)">
           <div class="image-container">
             <img [src]="'data:image/jpeg;base64,' + frame.KeyframeImage" [alt]="frame.Starttime" (contextmenu)="openFrameDialog($event, video, frame)" class="frames">
           </div>

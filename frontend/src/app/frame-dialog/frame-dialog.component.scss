@@ -21,6 +21,17 @@
   position: relative;
 }
 
+.play-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-icon {
+  cursor: pointer;
+  z-index: 1000;
+}
+
 .frame {
   max-height: 60vh;
   max-width: 60vw;

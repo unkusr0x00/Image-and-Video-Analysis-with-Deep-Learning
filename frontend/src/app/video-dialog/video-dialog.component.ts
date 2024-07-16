@@ -19,6 +19,7 @@ export class VideoDialogComponent {
 
   videoUrl: SafeUrl | null = null;
   firstTimeChange: boolean = true;
+  firstPlay: boolean = true;
 
   constructor(public dialogRef: MatDialogRef<VideoDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,13 +48,36 @@ export class VideoDialogComponent {
   ngAfterViewInit(): void {
   }
 
+  onPlay(event: Event): void {
+    if(this.firstPlay === true) {
+      if (this.data.fromframe === true) {
+        const videoElement = event.target as HTMLVideoElement;
+        videoElement.currentTime = timeStringToMilliseconds(this.data.starttime) / 1000;
+      }
+    }
+    this.firstPlay = false;
+  }
+
   onTimeChange(): void {
+    const frameRate = this.data.framerate;
     const newTime = parseFloat(this.currentTimeInput);
     if (!isNaN(newTime)) {
-      this.videoPlayer.nativeElement.currentTime = newTime / 1000;
+      // Calculate the time increment for one frame
+      const timeIncrementPerFrame = 1 / frameRate;
+
+      // Determine the direction of the time change
+      if (newTime > this.videoPlayer.nativeElement.currentTime * 1000) {
+        // Increase the time by one frame
+        this.videoPlayer.nativeElement.currentTime += timeIncrementPerFrame;
+      } else if (newTime < this.videoPlayer.nativeElement.currentTime * 1000) {
+        // Decrease the time by one frame
+        this.videoPlayer.nativeElement.currentTime -= timeIncrementPerFrame;
+      }
+
       this.updateTime();
     }
   }
+
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
@@ -83,4 +107,21 @@ export class VideoDialogComponent {
   onSubmit(): void {
     this.dialogRef.close(); //TODO: Implement submit logic
   }
+}
+
+// Utility function to convert time string to milliseconds
+function timeStringToMilliseconds(timeString: string): number {
+  const parts = timeString.split(':');
+
+  if (parts.length !== 3) {
+    throw new Error('Invalid time format');
+  }
+
+  const hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+  const secondsParts = parts[2].split('.');
+  const seconds = parseInt(secondsParts[0], 10);
+  const milliseconds = secondsParts.length > 1 ? parseInt(secondsParts[1], 10) : 0;
+
+  return ((hours * 60 * 60) + (minutes * 60) + seconds) * 1000 + milliseconds;
 }

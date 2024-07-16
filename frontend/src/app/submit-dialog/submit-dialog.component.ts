@@ -10,8 +10,8 @@ import {EvaluationService} from "../services/evaluation/evaluation.service";
 })
 export class SubmitDialogComponent implements OnInit {
 
-  evaluationId: string = '43a2ad81-1ed9-48f2-a5c2-69046a154db2';
-  collection: string = 'V3C100';
+  evaluationId: string = 'bd957f33-f615-4010-8632-ffb012c9927a';
+  collection: string = 'IVADL';
   taskName: string = 'IVADL-Test';
   private username: string = 'ivadl01';
   private password: string = 'eZVyy8A4LwSfHca';
@@ -22,10 +22,14 @@ export class SubmitDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data != undefined) {
-
+    if (this.data == undefined) {
+      this.data = {
+        videoID: '',
+        firstTimeStamp: 0,
+        lastTimeStamp: 0
+      };
+      }
     }
-  }
 
   onLogin(): void {
     this.evaluationService.login(this.username, this.password).subscribe(
