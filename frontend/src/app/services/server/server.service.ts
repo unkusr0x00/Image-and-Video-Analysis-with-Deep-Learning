@@ -38,4 +38,13 @@ export class ServerService {
 
     return this.http.post(url, searchData, { headers, responseType: 'blob' });
   }
+
+  uploadImage(file: File): Observable<any> {
+    const url = `${this.Url}/upload-image`;
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+    console.log(file);
+
+    return this.http.post<any>(url, formData);
+  }
 }

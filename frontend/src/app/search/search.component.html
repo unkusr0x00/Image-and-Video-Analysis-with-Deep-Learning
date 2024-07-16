@@ -9,6 +9,10 @@
         <mat-option value="CNN">Search with CNN Results</mat-option>
       </mat-select>
     </mat-form-field>
+    <div>
+      <input type="file" (change)="onFileSelected($event)">
+      <button mat-fab (click)="onUpload()">Upload</button>
+    </div>
     <div class="search-bar">
       <mat-form-field appearance="fill" class="searchbar">
         <mat-label>Text query to search for desired video content</mat-label>
@@ -31,7 +35,10 @@
           </div>
       </div>
       <div class="thumbnails">
-        <div *ngFor="let frame of video.Frames; let i = index" class="thumbnail" [ngStyle]="{ 'background-color': frame.isMatch ? 'red' : 'transparent' }" (click)="markAsSolutionItem(frame)">
+        <div *ngFor="let frame of video.Frames; let i = index" class="thumbnail" [ngStyle]="{
+         'background-color': frame.isMatch ? 'red' : 'transparent',
+         'box-shadow': frame.isMatch ? '0 4px 8px rgba(0, 0, 0, 0.8)' : 'none'
+     }"  (click)="markAsSolutionItem(frame)">
           <div class="image-container">
             <img [src]="'data:image/jpeg;base64,' + frame.KeyframeImage" [alt]="frame.Starttime" (contextmenu)="openFrameDialog($event, video, frame)" class="frames">
           </div>
