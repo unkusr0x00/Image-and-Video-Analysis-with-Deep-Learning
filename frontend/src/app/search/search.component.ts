@@ -33,8 +33,8 @@ export class SearchComponent implements OnInit {
       data: { videoID, framerate, fromframe },
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'custom-dialog-container'
     });
   }
@@ -117,8 +117,8 @@ export class SearchComponent implements OnInit {
       data: { videoID, frame, framerate },
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'frame-container'
     });
     };
@@ -127,8 +127,8 @@ export class SearchComponent implements OnInit {
     const dialogRef = this.dialog.open(SubmitDialogComponent, {
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'custom-dialog-container'
     });
   }
@@ -145,8 +145,8 @@ export class SearchComponent implements OnInit {
       data: { videoID, firstTimeStamp, lastTimeStamp },
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'custom-dialog-container'
     });
   }
