@@ -33,8 +33,8 @@ export class SearchComponent implements OnInit {
       data: { videoID, framerate, fromframe },
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'custom-dialog-container'
     });
   }
@@ -42,8 +42,10 @@ export class SearchComponent implements OnInit {
   doSearch() {
     if(this.searchMethod === 'CLIP') {
       this.clipSearch();
-    } else {
+    } else if (this.searchMethod === 'videoID') {
       this.searchID();
+    } else {
+      this.searchCNN();
     }
   }
 
@@ -58,15 +60,6 @@ export class SearchComponent implements OnInit {
         response => {
           console.log('Suchanfrage erfolgreich', response);
           this.videoData = response;
-          // Check if any frame of the video array has isMatch set to true and log the frames
-          for(let video of this.videoData) {
-            for(let frame of video.Frames) {
-              if(frame.isMatch === true) {
-                console.log(frame);
-              }
-            }
-          }
-          console.log('nothing found');
         }, err => {
           console.error('Fehler bei der Suchanfrage', err);
         });
@@ -75,10 +68,17 @@ export class SearchComponent implements OnInit {
     }
   }
 
+  searchCNN() {
+    this.serverService.searchCNN(this.query).subscribe( response => {
+      console.log('Suchanfrage erfolgreich', response);
+      this.videoData = response;
+    });
+  }
+
   searchID() {
     // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
     this.serverService.searchID(this.query).subscribe( response => {
-      this.videoData = response;
+      this.videoData = [response];
       console.log('Suchanfrage erfolgreich', this.videoData);
     }, err => {
       console.error('Fehler bei der Suchanfrage', err);
@@ -90,15 +90,6 @@ export class SearchComponent implements OnInit {
     this.serverService.clipSearch(this.query).subscribe(response => {
       console.log('Suchanfrage erfolgreich', response);
       this.videoData = response;
-      // Check if any frame of the video array has isMatch set to true and log the frames
-      for(let video of this.videoData) {
-        for(let frame of video.Frames) {
-          if(frame.isMatch === true) {
-            console.log(frame);
-          }
-        }
-      }
-      console.log('nothing found');
     }, err => {
       console.error('Fehler bei der Suchanfrage', err);
     });
@@ -117,8 +108,8 @@ export class SearchComponent implements OnInit {
       data: { videoID, frame, framerate },
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'frame-container'
     });
     };
@@ -127,8 +118,8 @@ export class SearchComponent implements OnInit {
     const dialogRef = this.dialog.open(SubmitDialogComponent, {
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'custom-dialog-container'
     });
   }
@@ -145,8 +136,8 @@ export class SearchComponent implements OnInit {
       data: { videoID, firstTimeStamp, lastTimeStamp },
       width: 'auto',
       height: 'auto',
-      maxWidth: '80vw', // Maximale Breite des Dialogs
-      maxHeight: '80vh', // Maximale Höhe des Dialogs
+      maxWidth: '80vw',
+      maxHeight: '80vh',
       panelClass: 'custom-dialog-container'
     });
   }

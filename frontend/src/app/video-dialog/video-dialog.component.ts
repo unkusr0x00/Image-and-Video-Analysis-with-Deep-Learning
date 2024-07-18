@@ -1,8 +1,10 @@
 import {Component, ElementRef, HostListener, Inject, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {createKeyboardEvent} from "@angular/cdk/testing/testbed/fake-events";
 import {ServerService} from "../services/server/server.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {SubmitDialogComponent} from "../submit-dialog/submit-dialog.component";
 
 @Component({
   selector: 'app-video-dialog',
@@ -24,7 +26,8 @@ export class VideoDialogComponent {
   constructor(public dialogRef: MatDialogRef<VideoDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private serverService: ServerService,
-              private sanitizer: DomSanitizer) {}
+              private sanitizer: DomSanitizer,
+              public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadVideo(this.data.videoID);
@@ -105,7 +108,17 @@ export class VideoDialogComponent {
   }
 
   onSubmit(): void {
-    this.dialogRef.close(); //TODO: Implement submit logic
+    let firstTimeStamp = this.currentTime;
+    let lastTimeStamp = firstTimeStamp + 10000;
+    let videoID = this.data.videoID;
+    const dialogReff = this.dialog.open(SubmitDialogComponent, {
+      data: { videoID, firstTimeStamp, lastTimeStamp },
+      width: 'auto',
+      height: 'auto',
+      maxWidth: '80vw',
+      maxHeight: '80vh',
+      panelClass: 'custom-dialog-container'
+    })
   }
 }
 

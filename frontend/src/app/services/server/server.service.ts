@@ -30,6 +30,15 @@ export class ServerService {
     return this.http.post<any>(url, searchData, { headers });
   }
 
+  searchCNN(query: string): Observable<any> {
+    const url = `${this.Url}/search-by-query`;
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const searchData = { query };
+    console.log(searchData);
+
+    return this.http.post<any>(url, searchData, { headers });
+  }
+
   getVideo(videoID: string): Observable<Blob> {
     const url = `${this.Url}/get-video`;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
