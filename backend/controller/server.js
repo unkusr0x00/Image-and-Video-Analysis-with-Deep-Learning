@@ -27,6 +27,7 @@ const condaPath = 'C:/Users/Aron/miniconda3/Scripts/conda.exe';
 let db, gfsBucket;
 let yoloDb, yoloGfsBucket;
 
+//Needed for Keyword mapping of YOLO Objects
 const objectClasses = {
     0: "person",
     1: "bicycle",
@@ -110,7 +111,7 @@ const objectClasses = {
     79: "toothbrush"
 };
 
-// Verbindung zur MongoDB herstellen und GridFS initialisieren
+// Connect to MongoDB and initialize GridFS
 mongoose.connect(`${url}/${dbName}`, { useNewUrlParser: true, useUnifiedTopology: true });
 const conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
@@ -120,7 +121,7 @@ conn.once('open', () => {
     console.log(`Connected to database: ${dbName}`);
 });
 
-// Connection to YOLOKeyframeDB
+// Connection to YOLOKeyframeDB - Separate (fewer) Keyframes for YOLO Objects detection
 const yoloConn = mongoose.createConnection(`${url}/${yoloDbName}`, { useNewUrlParser: true, useUnifiedTopology: true });
 yoloConn.on('error', console.error.bind(console, 'connection error:'));
 yoloConn.once('open', () => {
@@ -133,6 +134,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+// Search a Video in the Database by its VideoID
 app.post('/searchID', async (req, res) => {
     let videoID = String(req.body.VideoID);
     try {
@@ -163,6 +165,7 @@ app.post('/searchID', async (req, res) => {
     }
 });
 
+// Search Keyframes for a specified Text-Query using CLIP, search resulting VideoIDs in the Database and return the result
 app.post('/clip-search', async (req, res) => {
     const query = req.body.query;
 
@@ -226,6 +229,7 @@ app.post('/clip-search', async (req, res) => {
     });
 });
 
+//Return the Original video data for a specified VideoID (For the Video-Player)
 app.post('/get-video', async (req, res) => {
     const videoID = req.body.videoID;
 
@@ -249,7 +253,7 @@ app.post('/get-video', async (req, res) => {
     }
 });
 
-// New endpoint for image upload and processing
+// Upload an image, Create a Caption for this image with BLIP, use the Caption to search for matching Keyframes with CLIP and retun the result.
 app.post('/upload-image', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).send({ error: 'No image uploaded' });
@@ -329,6 +333,7 @@ app.post('/upload-image', upload.single('image'), (req, res) => {
     });
 });
 
+//Exctract Keywords from a textquery that match YOLO Object classes.
 function extractKeywords(query) {
     const keywords = [];
     for (const key in objectClasses) {
@@ -340,6 +345,8 @@ function extractKeywords(query) {
     return keywords;
 }
 
+//Only for Search with YOLO: Search Database for matching Objects to keywords in the search Query, calculate a match-score and return the 15 videos with the highest matching score.
+//Only return 15 videos because if too many matching keyframes are found, the server might crash.
 app.post('/search-by-query', async (req, res) => {
     const query = req.body.query;
     const keywords = extractKeywords(query);

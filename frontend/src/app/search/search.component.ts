@@ -39,6 +39,7 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  //Perform search according to selected search-method
   doSearch() {
     if(this.searchMethod === 'CLIP') {
       this.clipSearch();
@@ -76,7 +77,6 @@ export class SearchComponent implements OnInit {
   }
 
   searchID() {
-    // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
     this.serverService.searchID(this.query).subscribe( response => {
       this.videoData = [response];
       console.log('Suchanfrage erfolgreich', this.videoData);
@@ -86,7 +86,6 @@ export class SearchComponent implements OnInit {
   }
 
   clipSearch() {
-    // Hier wird die Logik zur Verarbeitung der Suchanfrage eingefügt.
     this.serverService.clipSearch(this.query).subscribe(response => {
       console.log('Suchanfrage erfolgreich', response);
       this.videoData = response;

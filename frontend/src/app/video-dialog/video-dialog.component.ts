@@ -52,6 +52,7 @@ export class VideoDialogComponent {
   }
 
   onPlay(event: Event): void {
+    //Jump to frame timestamp, if video player is opened from frame inspection
     if(this.firstPlay === true) {
       if (this.data.fromframe === true) {
         const videoElement = event.target as HTMLVideoElement;
