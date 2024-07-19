@@ -1,4 +1,4 @@
-# Content-Based Video Retrieval System by Aron Wedam and Alexander Neben
+# Content-Based Video Retrieval System
 
 This documentation and setup guide is written for a Windows System using a conda environment.
 It is also necessary to install Node.js (min. version 16) and a compatible Angular version
