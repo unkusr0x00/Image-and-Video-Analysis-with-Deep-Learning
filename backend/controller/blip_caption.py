@@ -4,6 +4,15 @@ from PIL import Image
 import sys
 
 def generate_image_description(image_path):
+    """
+    Generate a descriptive caption for an image using the BLIP model.
+
+    Args:
+        image_path (str): Path to the image file.
+
+    Returns:
+        str: Generated description for the image.
+    """
     # Check if CUDA is available and use it if possible
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -32,7 +41,7 @@ def generate_image_description(image_path):
     return description
 
 if __name__ == "__main__":
+    # Get the image path from the command line arguments
     image_path = sys.argv[1]
     description = generate_image_description(image_path)
     print(description)
-

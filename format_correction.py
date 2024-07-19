@@ -4,27 +4,68 @@ import argparse
 import re
 import shutil
 
+
 # Convert time string to seconds
 def time_to_seconds(time_str):
+    """
+    Convert a time string in HH:MM:SS,sss format to seconds.
+
+    Args:
+        time_str (str): Time string to convert.
+
+    Returns:
+        float: Time in seconds.
+    """
     h, m, s = map(float, time_str.replace('_', ':').split(':'))
     return h * 3600 + m * 60 + s
 
+
 # Convert frames to seconds
 def frame_to_seconds(frame, frame_rate=24):
+    """
+    Convert a frame number to seconds based on the frame rate.
+
+    Args:
+        frame (int): Frame number.
+        frame_rate (int): Frame rate of the video. Default is 24.
+
+    Returns:
+        float: Time in seconds.
+    """
     return frame / frame_rate
+
 
 # Format seconds to HH:MM:SS,sss
 def format_seconds(seconds):
+    """
+    Format a time in seconds to HH_MM_SS.sss format.
+
+    Args:
+        seconds (float): Time in seconds.
+
+    Returns:
+        str: Formatted time string.
+    """
     h = int(seconds // 3600)
     m = int((seconds % 3600) // 60)
     s = seconds % 60
     return f"{h:02}_{m:02}_{s:06.3f}".replace(',', '.')
 
+
 # Process timestamps and frames in file content
 def process_timestamps_and_frames(file_content):
+    """
+    Process timestamps and frames in the content of a file.
+
+    Args:
+        file_content (str): Content of the file.
+
+    Returns:
+        list: List of tuples with start and end times.
+    """
     lines = file_content.strip().split('\n')
     results = []
-    
+
     for line in lines:
         if re.match(r'^\d{2}:\d{2}:\d{2}\.\d{3}', line):
             timestamps = line.split(',')
@@ -36,15 +77,23 @@ def process_timestamps_and_frames(file_content):
             frame_start = format_seconds(frame_to_seconds(int(frames[0].strip())))
             frame_end = format_seconds(frame_to_seconds(int(frames[1].strip())))
             results.append((frame_start, frame_end))
-    
+
     return results
+
 
 # Process single file
 def process_file(file_path, output_dir):
+    """
+    Process a single file to convert frames or timestamps and save the result.
+
+    Args:
+        file_path (str): Path to the input file.
+        output_dir (str): Path to the output directory.
+    """
     with open(file_path, 'r') as file:
         content = file.read()
     converted_times = process_timestamps_and_frames(content)
-    
+
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -53,8 +102,16 @@ def process_file(file_path, output_dir):
         for start, end in converted_times:
             out_file.write(f"{start}, {end}\n")
 
+
 # Process input directory or single file
 def process_input(input_path, option):
+    """
+    Process input directory or single file based on the specified option.
+
+    Args:
+        input_path (str): Path to the input directory or file.
+        option (str): Option specifying whether to process 'shots', 'keyframes', or 'both'.
+    """
     if os.path.isfile(input_path):
         if option == 'shots' or option == 'both':
             output_dir = os.path.dirname(input_path) + '_converted'
@@ -73,15 +130,23 @@ def process_input(input_path, option):
     else:
         print(f"Error: {input_path} is not a valid file or directory.")
 
+
 # Process keyframes for filenames
 def process_keyframes_file(file_path, output_dir):
+    """
+    Process keyframe filenames to convert frames or timestamps.
+
+    Args:
+        file_path (str): Path to the keyframe file.
+        output_dir (str): Path to the output directory.
+    """
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
     file_name = os.path.basename(file_path)
     match_frame = re.match(r'(.+)_start_(\d+)\.jpg', file_name)
     match_time = re.match(r'(.+)_start_(\d{2}:\d{2}:\d{2}\.\d{3})\.jpg', file_name)
-    
+
     if match_frame:
         video_name, frame = match_frame.groups()
         seconds = format_seconds(frame_to_seconds(int(frame)))
@@ -90,11 +155,19 @@ def process_keyframes_file(file_path, output_dir):
         new_file_name = file_name.replace(':', '_')
     else:
         new_file_name = file_name
-    
+
     shutil.copy(file_path, os.path.join(output_dir, new_file_name))
+
 
 # Process keyframes for folder
 def process_keyframes_folder(input_path, output_path):
+    """
+    Process keyframe filenames in a folder to convert frames or timestamps.
+
+    Args:
+        input_path (str): Path to the input directory containing keyframe files.
+        output_path (str): Path to the output directory.
+    """
     for root, dirs, files in os.walk(input_path):
         for file in files:
             relative_path = os.path.relpath(root, input_path)
@@ -103,31 +176,50 @@ def process_keyframes_folder(input_path, output_path):
                 os.makedirs(target_dir)
             process_keyframes_file(os.path.join(root, file), target_dir)
 
+
 # Replace slashes in filenames in keyframes_converted folder
 def replace_slashes_in_filenames(folder_path):
+    """
+    Replace slashes in filenames in the specified folder.
+
+    Args:
+        folder_path (str): Path to the folder containing keyframe files.
+    """
     for root, dirs, files in os.walk(folder_path):
         for file in files:
             new_file = file.replace('/', '_')
             if new_file != file:
                 os.rename(os.path.join(root, file), os.path.join(root, new_file))
 
+
 # Rename files to format 00100_Scene-1
 def rename_files_to_scene_format(folder_path):
+    """
+    Rename files to the format 00100_Scene-1 in the specified folder.
+
+    Args:
+        folder_path (str): Path to the folder containing keyframe files.
+    """
     for root, dirs, files in os.walk(folder_path):
         valid_files = [file for file in files if '_start_' in file]
-        files_sorted = sorted(valid_files, key=lambda x: time_to_seconds(x.split('_start_')[1].replace('_', ':').replace('.jpg', '')))
+        files_sorted = sorted(valid_files, key=lambda x: time_to_seconds(
+            x.split('_start_')[1].replace('_', ':').replace('.jpg', '')))
         for idx, file in enumerate(files_sorted):
             base_name = file[:5]
-            new_file = f"{base_name}_Scene-{idx+1}_.jpg"
+            new_file = f"{base_name}_Scene-{idx + 1}_.jpg"
             os.rename(os.path.join(root, file), os.path.join(root, new_file))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert frames to seconds in timestamps or filenames.")
-    parser.add_argument('input_path', nargs='?', default=None, help="Path to the input file or directory containing .txt files or keyframe images.")
+    parser.add_argument('input_path', nargs='?', default=None,
+                        help="Path to the input file or directory containing .txt files or keyframe images.")
     parser.add_argument('-s', '--shots', action='store_true', help="Process shot boundaries.")
     parser.add_argument('-k', '--keyframes', action='store_true', help="Process keyframes.")
-    parser.add_argument('-f', '--folder', default=None, help="Folder containing 'keyframes' and 'shot_boundaries' directories.")
-    parser.add_argument('-r', '--rename', action='store_true', help="Rename files to scene format. (execute after initial conversion in _converted folder)")
+    parser.add_argument('-f', '--folder', default=None,
+                        help="Folder containing 'keyframes' and 'shot_boundaries' directories.")
+    parser.add_argument('-r', '--rename', action='store_true',
+                        help="Rename files to scene format. (execute after initial conversion in _converted folder)")
 
     args = parser.parse_args()
     option = 'both'
@@ -135,7 +227,7 @@ if __name__ == "__main__":
         option = 'shots'
     elif args.keyframes:
         option = 'keyframes'
-    
+
     if args.folder:
         if not os.path.isdir(args.folder):
             print(f"Error: {args.folder} is not a valid directory.")
