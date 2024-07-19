@@ -11,9 +11,9 @@ To get started clone the git repository
 git clone https://github.com/unkusr0x00/Image-and-Video-Analysis-with-Deep-Learning.git 
 ```
 
-Download the V3C1-100 Dataset and put it into the `backend/controller` directory
+Download the V3C1-100 Dataset and put it into the `Image-and-Video-Analysis-with-Deep-Learning` root directory *as well as* into the  `backend/controller` directory
 
-Download the `Keyframes, shot_boundaries and converted shot_boundaries_converted`
+Download the `Keyframes, shot_boundaries and shot_boundaries_converted`
 
 https://drive.google.com/file/d/11g2qKGvvtYjPtT3__PF2r8pEOIylL6CQ/view?usp=sharing
 
